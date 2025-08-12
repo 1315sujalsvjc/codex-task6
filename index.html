@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form Validation</title>
+    <style>
+        /* ===== Page Styling ===== */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6dd5fa, #2980b9);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* ===== Container Styling ===== */
+        .container {
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* ===== Input Fields ===== */
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        /* Focus Effect */
+        input:focus, textarea:focus {
+            border-color: #2980b9;
+            box-shadow: 0 0 6px rgba(41, 128, 185, 0.3);
+            outline: none;
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        /* ===== Error Messages ===== */
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 3px;
+        }
+
+        /* ===== Submit Button ===== */
+        button {
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 12px;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background: #1f6391;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Your name">
+        <div class="error" id="nameError"></div>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" placeholder="Your email">
+        <div class="error" id="emailError"></div>
+
+        <label for="message">Message:</label>
+        <textarea id="message" placeholder="Your message"></textarea>
+        <div class="error" id="messageError"></div>
+
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById("contactForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let message = document.getElementById("message").value.trim();
+        let isValid = true;
+
+        // Clear previous errors
+        document.getElementById("nameError").textContent = "";
+        document.getElementById("emailError").textContent = "";
+        document.getElementById("messageError").textContent = "";
+
+        // Validate Name
+        if (name === "") {
+            document.getElementById("nameError").textContent = "Name is required.";
+            isValid = false;
+        }
+
+        // Validate Email
+        if (email === "") {
+            document.getElementById("emailError").textContent = "Email is required.";
+            isValid = false;
+        } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+            document.getElementById("emailError").textContent = "Enter a valid email.";
+            isValid = false;
+        }
+
+        // Validate Message
+        if (message === "") {
+            document.getElementById("messageError").textContent = "Message cannot be empty.";
+            isValid = false;
+        }
+
+        // If valid, show success
+        if (isValid) {
+            alert("Form submitted successfully!");
+            document.getElementById("contactForm").reset();
+        }
+    });
+</script>
+
+</body>
+</html>
